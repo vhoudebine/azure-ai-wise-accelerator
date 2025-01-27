@@ -9,3 +9,10 @@ app/backend/__pycache__/
 app/backend/lib/
 
 .env
+src/wise/__pycache__/__init__.cpython-311.pyc
+src/wise/__pycache__/evaluator.cpython-311.pyc
+src/wise/__pycache__/fact_checker.cpython-311.pyc
+src/wise/__pycache__/fact_extractor.cpython-311.pyc
+src/wise/__pycache__/utils.cpython-311.pyc
+fidelity_prospectus.pdf
+dev.ipynb
