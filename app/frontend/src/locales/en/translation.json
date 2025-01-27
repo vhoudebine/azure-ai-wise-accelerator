@@ -1,0 +1,25 @@
+{
+    "app": {
+        "title": "Coffee Chat",
+        "footer": "Built with Azure AI, Azure OpenAI, and Azure Speech",
+        "showTranscript": "Show transcript",
+        "stopRecording": "Stop recording",
+        "startRecording": "Start recording",
+        "stopConversation": "Stop conversation"
+    },
+    "status": {
+        "notRecordingMessage": "Conversation has not started yet.",
+        "conversationInProgress": "Conversation in progress"
+    },
+    "history": {
+        "transcriptHistory": "Transcript history",
+        "noHistory": "No history yet."
+    },
+    "groundingFiles": {
+        "title": "Grounding files",
+        "description": "Files used to ground the answers."
+    },
+    "menu": {
+        "title": "Menu"
+    }
+}
