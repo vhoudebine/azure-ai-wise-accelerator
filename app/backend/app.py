@@ -72,8 +72,6 @@ async def create_app():
         - You are looking for a fund that is low risk and has a good return.
         - You are looking to invest $10,000.
         - You are looking to invest for 5 years.
-        - You are looking to invest in a mutual fund.
-        - You are looking to invest in a mutual fund that is low risk.
         - You are looking to invest in a mutual fund that is low risk and has a good return.
     """
 

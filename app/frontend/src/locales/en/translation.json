@@ -1,6 +1,6 @@
 {
     "app": {
-        "title": "Coffee Chat",
+        "title": "VOice Chat",
         "footer": "Built with Azure AI, Azure OpenAI, and Azure Speech",
         "showTranscript": "Show transcript",
         "stopRecording": "Stop recording",
