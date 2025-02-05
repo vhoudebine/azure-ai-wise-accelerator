@@ -1,6 +1,5 @@
 from typing import Any
 
-from order_state import order_state_singleton
 from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential
 from azure.search.documents.aio import SearchClient
@@ -71,103 +70,6 @@ async def search(
     return ToolResult(results, ToolResultDirection.TO_SERVER)
 
 
-
-"""
-Purpose of the Tool:
-    Order Management:
-        Enable GPT-4o to update the current order by adding or removing items based on user requests.
-    State Management:
-        Update the current order state, in both the frontend (UI) and backend, by adding or removing items based on user requests.
-    User Interaction:
-        Provide users with a seamless ordering experience by accurately updating their orders based on their requests.
-"""
-update_order_tool_schema = {
-    "type": "function",
-    "name": "update_order",
-    "description": "Update the current order by adding or removing items.",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "action": { 
-                "type": "string", 
-                "description": "Action to perform: 'add' or 'remove'.", 
-                "enum": ["add", "remove"]
-            },
-            "item_name": { 
-                "type": "string", 
-                "description": "Name of the item to update, e.g., 'Cappuccino'."
-            },
-            "size": { 
-                "type": "string", 
-                "description": "Size of the item to update, e.g., 'Large'."
-            },
-            "quantity": { 
-                "type": "integer", 
-                "description": "Quantity of the item to update. Represents the number of items."
-            },
-            "price": { 
-                "type": "number", 
-                "description": "Price of a single item to add. Required only for 'add' action. Note: This is the price per individual item, not the total price for the quantity."
-            }
-        },
-        "required": ["action", "item_name", "size", "quantity"],
-        "additionalProperties": False
-    }
-}
-
-async def update_order(args, session_id: str) -> ToolResult:
-    """
-    Update the current order by adding or removing items.
-    """
-    print(f"\nUpdating the current order for session {session_id}.")
-    print(f"Arguments: {args}")
-    
-    # Update the order state on the backend
-    order_state_singleton.handle_order_update(session_id, args["action"], args["item_name"], args["size"], args.get("quantity", 0), args.get("price", 0.0))
-
-    order_summary = order_state_singleton.get_order_summary(session_id)
-    
-    json_order_summary = order_summary.model_dump_json()
-    print(f"Updated Order Summary: {json_order_summary}")
-
-    # Return the updated order state to the frontend client
-    return ToolResult(json_order_summary, ToolResultDirection.TO_CLIENT)
-
-
-"""
-Purpose of the Tool:
-    Order Summary Retrieval:
-        Retrieve the current order summary to provide the user with a concise overview of their order.
-    State Management:
-        Retrieve the current order state from the backend to display the items, total, tax, and final total.
-    User Interaction:
-        Enable GPT-4o to communicate the order summary to the user in a clear and concise manner.
-"""
-get_order_tool_schema = {
-    "type": "function",
-    "name": "get_order",
-    "description": "Retrieve the current order summary.",
-    "parameters": {
-        "type": "object",
-        "properties": {},
-        "required": [],
-        "additionalProperties": False
-    }
-}
-
-async def get_order(session_id: str) -> ToolResult:
-    """
-    Retrieve the current order summary.
-    """
-    print(f"\nRetrieving the current order summary for session {session_id}.")
-    
-    order_summary = order_state_singleton.get_order_summary(session_id)
-    print(f"Order Summary: {order_summary}")
-        
-    # Return the order summary to the model
-    return ToolResult(order_summary.model_dump_json(), ToolResultDirection.TO_SERVER)
-
-
 # Attach tools to the RTMiddleTier instance
 def attach_tools_rtmt(rtmt: RTMiddleTier,
     credentials: AzureKeyCredential | DefaultAzureCredential,
@@ -185,7 +87,3 @@ def attach_tools_rtmt(rtmt: RTMiddleTier,
     search_client = SearchClient(search_endpoint, search_index, credentials, user_agent="RTMiddleTier")
 
     rtmt.tools["search"] = Tool(schema=search_tool_schema, target=lambda args: search(search_client, semantic_configuration, identifier_field, content_field, embedding_field, use_vector_query, args))
-    rtmt.tools["update_order"] = Tool(schema=update_order_tool_schema, target=lambda args, session_id: update_order(args, session_id))
-    rtmt.tools["get_order"] = Tool(schema=get_order_tool_schema, target=lambda _, session_id: get_order(session_id))
-
-

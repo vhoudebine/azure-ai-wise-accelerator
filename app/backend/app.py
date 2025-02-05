@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 from tools import attach_tools_rtmt
 from rtmt import RTMiddleTier
-from azurespeech import AzureSpeech
+from evaluation import Evaluation
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("voicerag")
@@ -93,6 +93,8 @@ async def create_app():
 
     # azurespeech = AzureSpeech(system_message=rtmt.system_message)
     # azurespeech.attach_to_app(app, "/azurespeech")
+    eval = Evaluation()
+    eval.attach_to_app(app, "/evaluation")
 
     # current_directory = Path(__file__).parent
     # app.add_routes([web.get('/', lambda _: web.FileResponse(current_directory / 'static/index.html'))])

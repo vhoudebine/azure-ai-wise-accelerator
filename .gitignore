@@ -7,6 +7,7 @@ app/frontend/node_modules/
 # BACK END
 app/backend/__pycache__/
 app/backend/lib/
+app/backend/bak/
 
 .env
 src/wise/__pycache__/__init__.cpython-311.pyc
