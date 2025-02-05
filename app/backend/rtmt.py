@@ -9,9 +9,7 @@ from aiohttp import web
 from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
-from order_state import order_state_singleton  # Import the order state singleton
-
-logger = logging.getLogger("coffee-chat")
+logger = logging.getLogger("voice-chat")
 
 class ToolResultDirection(Enum):
     TO_SERVER = 1
@@ -122,10 +120,7 @@ class RTMiddleTier:
                         tool_call = self._tools_pending[message["item"]["call_id"]]
                         tool = self.tools[item["name"]]
                         args = item["arguments"]
-                        if item["name"] in ["update_order", "get_order"]:
-                            result = await tool.target(json.loads(args), session_id)
-                        else:
-                            result = await tool.target(json.loads(args))
+                        result = await tool.target(json.loads(args))
                         await server_ws.send_json({
                             "type": "conversation.item.create",
                             "item": {
@@ -235,10 +230,6 @@ class RTMiddleTier:
     async def _websocket_handler(self, request: web.Request):
         ws = web.WebSocketResponse()
         await ws.prepare(request)
-        
-        # Create a new session for each WebSocket connection
-        session_id = order_state_singleton.create_session()
-        self._session_map[ws] = session_id
 
         await self._forward_messages(ws)
         return ws
