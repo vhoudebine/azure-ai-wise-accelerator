@@ -24,26 +24,29 @@ class Evaluation:
     def __init__(self):
         # Azure OpenAI Client
         self.aoai_client = AzureOpenAI(
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            azure_endpoint=os.getenv("AZURE_OPENAI_EASTUS_ENDPOINT"),
             api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
-            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+            api_key=os.getenv("AZURE_OPENAI_EASTUS_API_KEY"),
         )
 
         # create Azure Storage Container Client to download the source documents
         # storage_account_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
-        storage_connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
-        storage_container_name = "wise-inputs"
-        # blob_service_client = BlobServiceClient(
-        #     account_url=f"https://{storage_account_name}.blob.core.windows.net",
-        #     credential=DefaultAzureCredential()
-        # )
-        blob_service_client = BlobServiceClient.from_connection_string(storage_connect_str)
+        storage_account_name = os.getenv('AZURE_STORAGE_ACCOUNT_NAME')
+        storage_container_name = os.getenv('AZURE_STORAGE_CONTAINER_NAME')
+        blob_service_client = BlobServiceClient(
+             account_url=f"https://{storage_account_name}.blob.core.windows.net",
+             credential=DefaultAzureCredential()
+         )
+        #blob_service_client = BlobServiceClient.from_connection_string(storage_connect_str)
         self.container_client = blob_service_client.get_container_client(storage_container_name)
 
         # create Azure Document Intelligence Client to parse the PDF documents
         doc_intelligence_endpoint = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT")
-        doc_intelligence_key = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_API_KEY")
+        doc_intelligence_key = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_KEY")
 
+        print(doc_intelligence_endpoint
+              )
+        print(doc_intelligence_key)
         self.document_analysis_client = DocumentIntelligenceClient(
             endpoint=doc_intelligence_endpoint,
             credential=AzureKeyCredential(doc_intelligence_key)
