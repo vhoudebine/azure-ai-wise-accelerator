@@ -174,7 +174,7 @@ class Evaluation:
         theme = "Initial call between a wealth advisor and a prospective customer"
 
         evaluator = Evaluator(self.aoai_client, evaluation_criteria, theme)
-        evaluation = evaluator.evaluate(transcript)
+        evaluation = evaluator.evaluate_transcription(transcript)
 
         print(evaluation)
         return web.json_response(evaluation)
@@ -187,3 +187,4 @@ class Evaluation:
         app.router.add_post(f"{path_prefix}/gerenate-facts", self.gerenate_facts)
         app.router.add_post(f"{path_prefix}/upload-document", self.upload_document)
         app.router.add_post(f"{path_prefix}/fact-check", self.fact_check)
+        app.router.add_post(f"{path_prefix}/transcript-evaluate", self.transcript_evaluate)

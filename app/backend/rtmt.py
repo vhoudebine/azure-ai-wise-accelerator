@@ -80,8 +80,9 @@ class RTMiddleTier:
 
     async def _process_message_to_client(self, msg: str, client_ws: web.WebSocketResponse, server_ws: web.WebSocketResponse) -> Optional[str]:
         message = json.loads(msg.data)
+        print(client_ws)
         updated_message = msg.data
-        session_id = self._session_map[client_ws]
+        #session_id = self._session_map[client_ws]
         if message is not None:
             match message["type"]:
                 case "session.created":
