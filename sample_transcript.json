@@ -1,0 +1,96 @@
+{
+    "transcript": [
+      {
+        "speaker": "Advisor",
+        "text": "Hey Jonathan, it's Alex from Fidelity Investments. How's it going today?"
+      },
+      {
+        "speaker": "Client",
+        "text": "Hey Alex, doing well, thanks! Just trying to get a better handle on some investment options. Heard you guys have some interesting products."
+      },
+      {
+        "speaker": "Advisor",
+        "text": "Absolutely, we've got a few that might catch your interest. Let's dive in. What are you curious about?"
+      },
+      {
+        "speaker": "Client",
+        "text": "Well, I'm looking for something with good returns but not too risky. I've got a decent mix already, but I'm open to exploring more. What do you suggest?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "Got it. Let's start with the Fidelity International High Dividend ETF, or FIDI. It's all about those high dividends from large and mid-cap international companies. The annual operating expense is just 0.18%, so it's pretty cost-effective."
+      },
+      {
+        "speaker": "Client",
+        "text": "Sounds interesting. How's the performance been lately?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "From 2019 to 2023, returns have ranged from -11.65% to 17.32%. In 2023, it was up 16.60% before taxes. Not too shabby, right?"
+      },
+      {
+        "speaker": "Client",
+        "text": "Yeah, not bad at all. What about risks? Anything I should be worried about?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "Good question. There's the usual market volatility and foreign exposure. Plus, since it's passively managed, it might not always match the index perfectly. But overall, it's a solid choice for dividend-focused investing."
+      },
+      {
+        "speaker": "Client",
+        "text": "Okay, cool. What else do you have?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "You might like the Fidelity Blue Chip Growth ETF, FBCG. It's all about long-term capital growth with a focus on blue chip companies. The management fee is a bit higher at 0.59%, but it's had some impressive returns."
+      },
+      {
+        "speaker": "Client",
+        "text": "Impressive, huh? Like what?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "In 2023, it returned a whopping 57.72%! But keep in mind, it's not without its ups and downs. 2022 was a rough year with a -39.01% return."
+      },
+      {
+        "speaker": "Client",
+        "text": "Wow, that's quite a swing. What's the deal with the 'Tracking Basket' thing I heard about?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "Ah, the Tracking Basket. It's a way to keep the fund's strategy under wraps, which can help protect against copycats. But it might lead to higher trading costs and price discrepancies."
+      },
+      {
+        "speaker": "Client",
+        "text": "Got it. Anything else I should consider?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "Sure, there's the Fidelity High Dividend ETF, FDVV. It's got a super low expense ratio of 0.16% and focuses on high-dividend-paying companies. The returns have been pretty steady, with a 17.90% return in 2023."
+      },
+      {
+        "speaker": "Client",
+        "text": "That sounds like a safe bet. How does it compare to the others in terms of risk?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "It's generally less volatile than the Blue Chip Growth ETF, but like any investment, there's still market risk and foreign exposure. It's a good option if you're looking for steady income."
+      },
+      {
+        "speaker": "Client",
+        "text": "Alright, thanks for breaking it down, Alex. What's the next step if I want to move forward with any of these?"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "No problem, Jonathan. We can set up a time to go over your portfolio in more detail and see how these fit in. I'll send you an email with some times that work for me. Sound good?"
+      },
+      {
+        "speaker": "Client",
+        "text": "Sounds perfect. Thanks again, Alex. Looking forward to it!"
+      },
+      {
+        "speaker": "Advisor",
+        "text": "Great! Talk soon, Jonathan. Take care!"
+      }
+    ]
+  }
