@@ -58,7 +58,7 @@ class Evaluation:
         # testin
 
         response = self.aoai_client.chat.completions.create(
-            model="gpt-4o-global",
+            model=os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"),
             messages=[
                 {"role": "system", "content": "you are a helpful assistant"},
                 {"role": "user", "content": "hello"},
