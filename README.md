@@ -1,6 +1,6 @@
 # azure-ai-wise-accelerator
 
-Accelerator for AI-based role play simulations on Azure
+AI and simulation based solution for enablement in the Financial Services Industry on Azure
 
 ## WISE
 
@@ -28,3 +28,7 @@ cd app\frontend
 npm install
 npm run dev
 ```
+
+#### Resources
+
+This project was inspired and bootstrapped using this repo: https://github.com/john-carroll-sw/coffee-chat-voice-assistant
