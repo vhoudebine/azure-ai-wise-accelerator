@@ -23,7 +23,6 @@ async def create_app():
     if not os.environ.get("RUNNING_IN_PRODUCTION"):
         logger.info("Running in development mode, loading from .env file")
         load_dotenv()
-    
     llm_endpoint = os.environ.get("AZURE_OPENAI_EASTUS2_ENDPOINT")
     llm_deployment = os.environ.get("AZURE_OPENAI_REALTIME_DEPLOYMENT")
     llm_key = os.environ.get("AZURE_OPENAI_EASTUS2_API_KEY")

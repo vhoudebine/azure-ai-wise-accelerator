@@ -86,7 +86,7 @@ class FactExtractor:
                   text: str,
                   detail: float = 1,
                   model: str = 'gpt-4o',
-                  deployment: str = 'gpt-4o-global',
+                  deployment: str = os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"),
                   additional_instructions: Optional[str] = None,
                   minimum_chunk_size: Optional[int] = 500,
                   chunk_delimiter: str = ".",

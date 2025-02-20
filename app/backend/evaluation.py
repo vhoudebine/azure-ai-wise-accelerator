@@ -145,9 +145,8 @@ class Evaluation:
         try:
             data = await request.json()
             transcript = data.get("transcript")
-
             fact_string = ('##### \n').join(facts)
-            fact_checker = FactChecker(self.aoai_client, fact_string, model='gpt-4o-global')
+            fact_checker = FactChecker(self.aoai_client, fact_string, model=os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"))
             fact_checker_report = fact_checker.check_transcript(transcript)
             return web.json_response(fact_checker_report)
         except Exception as e:
@@ -157,9 +156,10 @@ class Evaluation:
 
     async def transcript_evaluate(self, request):
         """Evaluate the transcript based on the evaluation criteria."""
+        print("[EVAL STARTING..]")
         data = await request.json()
         transcript = data.get("transcript")
-        
+        print("[TRANSCRIPT RECEIVED]: \n", transcript)
         evaluation_criteria = [
             {   
                 "criteria":"Next_steps",
