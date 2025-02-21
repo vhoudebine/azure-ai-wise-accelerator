@@ -1,0 +1,29 @@
+{
+    "personas": [
+        {
+            "id":"persona_1",
+            "name": "John",
+            "age": 42,
+            "gender": "Male",
+            "occupation":"Medical doctor",
+            "personality":"Skeptical",
+            "family":"Married, 3 Kids",
+            "customer_profile": "Invests in real estate",
+            "difficulty":"Hard",
+            "voice":"Ash"
+        },
+        {
+            "id":"persona_2",
+            "name": "Amy",
+            "age": 39,
+            "gender": "Female",
+            "occupation":"Tech Exec",
+            "personality":"Enthusiastic",
+            "family":"No Dependents",
+            "customer_profile": "Crypto investor",
+            "difficulty":"Hard",
+            "voice":"Coral"
+        }
+        
+    ]
+}

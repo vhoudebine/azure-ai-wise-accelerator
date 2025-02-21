@@ -52,12 +52,6 @@ class Evaluation:
             credential=AzureKeyCredential(doc_intelligence_key)
         )
     
-    async def get_avatar(self, request):
-        """Get avatar profiles the user selects from."""
-        avatar_def_path = os.path.join(os.path.dirname(__file__), "util/avatars.json")
-
-        avatar_def_dict = json.loads(avatar_def_path)
-        return web.json_response(avatar_def_dict)
 
     async def generate_response(self, request):
         """Generate AI response using Azure OpenAI GPT."""
@@ -142,16 +136,14 @@ class Evaluation:
         with open(fact_file, "r") as f:
             facts = f.read().splitlines()
 
-        try:
-            data = await request.json()
-            transcript = data.get("transcript")
-            fact_string = ('##### \n').join(facts)
-            fact_checker = FactChecker(self.aoai_client, fact_string, model=os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"))
-            fact_checker_report = fact_checker.check_transcript(transcript)
-            return web.json_response(fact_checker_report)
-        except Exception as e:
-            logging.error(f"Text-to-speech failed: {e}")
-            return web.json_response({"error": "Internal server error."}, status=500)
+        data = await request.json()
+        transcript = data.get("transcript")
+        fact_string = ('##### \n').join(facts)
+        fact_checker = FactChecker(self.aoai_client, fact_string, model=os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"))
+        fact_checker_report = fact_checker.check_transcript(transcript)
+        return fact_checker_report
+        
+        
 
 
     async def transcript_evaluate(self, request):
@@ -183,9 +175,16 @@ class Evaluation:
         evaluator = Evaluator(self.aoai_client, evaluation_criteria, theme)
         evaluation = evaluator.evaluate_transcription(transcript)
 
-        print(evaluation)
-        return web.json_response(evaluation)
-
+        return evaluation
+    
+    async def evaluate(self, request):
+        try:
+            rule_based_eval = await self.transcript_evaluate(request)
+            fact_check_eval = await self.fact_check(request)
+            return web.json_response({"rule_based_eval": rule_based_eval, "fact_check_eval": fact_check_eval})
+        except Exception as e:
+            logging.error(f"Evaluation failed: {e}")
+            return web.json_response({"error": f"Internal server error:{e}"}, status=500)
 
 
     def attach_to_app(self, app, path_prefix="/evaluation"):
@@ -194,4 +193,4 @@ class Evaluation:
         app.router.add_post(f"{path_prefix}/gerenate-facts", self.gerenate_facts)
         app.router.add_post(f"{path_prefix}/upload-document", self.upload_document)
         app.router.add_post(f"{path_prefix}/fact-check", self.fact_check)
-        app.router.add_post(f"{path_prefix}/transcript-evaluate", self.transcript_evaluate)
+        app.router.add_post(f"{path_prefix}/transcript-evaluate", self.evaluate)

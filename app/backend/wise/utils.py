@@ -7,7 +7,7 @@ load_dotenv()
 def get_chat_completion(aoai_client, 
                         messages, 
                         temperature=0, 
-                        max_tokens=8000, 
+                        max_tokens=800, 
                         model=os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"),
                         response_format=None
                         ):
