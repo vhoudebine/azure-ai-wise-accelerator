@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 export default function PersonaPanel() {
     return (
         <div className="space-y-8">
-            <Card className="relative border-purple-400 p-2">
+            <Card className="relative border-purple-400 p-2 hover:cursor-pointer hover:border-purple-400 hover:shadow-lg">
                 <span className="absolute right-0 top-0 rounded-tr-sm bg-purple-400 pl-1 pr-1 text-sm italic text-white">Hard</span>
                 <span className="block text-center font-medium">John</span>
                 <ul>
@@ -14,7 +14,7 @@ export default function PersonaPanel() {
                     <li>Invests in Real Estate</li>
                 </ul>
             </Card>
-            <Card className="relative border-gray-300 p-2">
+            <Card className="relative border-gray-300 p-2 hover:cursor-pointer hover:border-purple-400 hover:shadow-lg">
                 <span className="absolute right-0 top-0 rounded-tr-sm bg-purple-400 pl-1 pr-1 text-sm italic text-white">Medium</span>
                 <span className="block text-center font-medium">Amy</span>
                 <ul>
