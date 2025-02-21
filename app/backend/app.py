@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from tools import attach_tools_rtmt
 from rtmt import RTMiddleTier
 from evaluation import Evaluation
+from app_config import AppConfig
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("voicerag")
@@ -40,6 +41,9 @@ async def create_app():
     search_credential = AzureKeyCredential(search_key) if search_key else credential
     
     app = web.Application()
+
+    config = AppConfig()
+    config.attach_to_app(app, "/config")
 
     # Enable CORS
     cors = aiohttp_cors.setup(app, defaults={

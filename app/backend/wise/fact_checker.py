@@ -31,11 +31,11 @@ You must use a structured JSON format to provide the facts, their accuracy, and 
 
     def _check_facts(self, conversation_script):
         checked_facts = []
-        transcript = json.loads(conversation_script.replace("```json","").replace("```",""))
-        for turn in transcript['conversation']:
+        
+        for turn in conversation_script:
             if turn['speaker'] == 'Advisor':
-                current_index = transcript['conversation'].index(turn)
-                conversation_upto_now = transcript['conversation'][:current_index + 1]
+                current_index = conversation_script.index(turn)
+                conversation_upto_now = conversation_script[:current_index + 1]
                 user_prompt = f""""
                 #### Transcript
                 {conversation_upto_now}
