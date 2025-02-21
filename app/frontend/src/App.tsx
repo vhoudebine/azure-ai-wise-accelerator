@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Mic, MicOff, Menu, MessageSquare } from "lucide-react";
+import { Mic, MicOff, Menu, MessageSquare, SendHorizonal, Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Card } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import StatusMessage from "@/components/ui/status-message";
 // import MenuPanel from "@/components/ui/menu-panel";
 import PersonaPanel from "@/components/ui/persona-panel";
 import TranscriptPanel from "@/components/ui/transcript-panel";
+import EvaluationPanel from "./components/ui/evaluation-panel";
 import Settings from "@/components/ui/settings";
 // import ImageDialog from "@/components/ui/ImageDialog";
 
@@ -17,13 +18,13 @@ import useRealTime from "@/hooks/useRealtime";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useAudioPlayer from "@/hooks/useAudioPlayer";
 
-
 import { ThemeProvider, useTheme } from "./context/theme-context";
 import { DummyDataProvider, useDummyDataContext } from "@/context/dummy-data-context";
-import { AzureSpeechProvider, useAzureSpeechOnContext } from "@/context/azure-speech-context";
+// import { AzureSpeechProvider, useAzureSpeechOnContext } from "@/context/azure-speech-context";
+import { AzureSpeechProvider } from "@/context/azure-speech-context";
 
 import dummyTranscriptsData from "@/data/dummyTranscripts.json";
-import dummyOrderData from "@/data/dummyOrder.json";
+// import dummyOrderData from "@/data/dummyOrder.json";
 
 function App() {
     const [isRecording, setIsRecording] = useState(false);
@@ -40,6 +41,22 @@ function App() {
             timestamp: new Date(transcript.timestamp)
         }));
     });
+
+    const [evaluation, setEvaluation] = useState<{
+        classification: string | null;
+        overall_score: 0;
+        criteria: Array<any>;
+        rationale: string;
+        improvement_suggestion: string;
+    }>({
+        classification: null,
+        overall_score: 0,
+        criteria: [],
+        rationale: "",
+        improvement_suggestion: ""
+    });
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const realtime = useRealTime({
         enableInputAudioTranscription: true,
@@ -74,7 +91,6 @@ function App() {
         }
     });
 
-
     const { reset: resetAudioPlayer, play: playAudio, stop: stopAudioPlayer } = useAudioPlayer();
     const { start: startAudioRecording, stop: stopAudioRecording } = useAudioRecorder({
         onAudioRecorded: realtime.addUserAudio
@@ -94,6 +110,32 @@ function App() {
         }
     };
 
+    const handleEvaluate = async () => {
+        setIsLoading(true);
+        const adaptedTranscript = transcripts.map(message => ({
+            speaker: message.isUser ? "Advisor" : "Client",
+            text: message.text.trim() // Remove any leading or trailing whitespace
+        }));
+        const payload = { transcript: adaptedTranscript };
+        const result = await fetch("/evaluation/transcript-evaluate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        const evalReceived = await result.json();
+        setEvaluation(previous => ({
+            ...previous,
+            classification: evalReceived.evaluation.classification,
+            overall_score: evalReceived.evaluation.overall_score,
+            criteria: [...evalReceived.evaluation.criteria],
+            rationale: evalReceived.evaluation.rationale,
+            improvement_suggestion: evalReceived.evaluation.improvement_suggestion
+        }));
+        setIsLoading(false);
+    };
+
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -110,14 +152,17 @@ function App() {
             <div className="mx-auto max-w-7xl">
                 <div className="relative mb-6 flex flex-col items-center md:mb-4">
                     <h1 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-center text-4xl font-bold text-transparent md:text-6xl">
-                        Voice Chat
+                        WISE
                     </h1>
+                    <h2 className="margin-l purple m-4 text-2xl font-bold">
+                        AI simulation based solution for enablement in the Financial Services Industry on Azure
+                    </h2>
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 transform">
                         <Settings isMobile={isMobile} />
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-8">
                     {/* Mobile Menu Button */}
                     <Sheet>
                         <SheetTrigger asChild>
@@ -139,32 +184,59 @@ function App() {
                     {/* Desktop Menu Panel */}
                     <Card className="hidden p-6 md:block">
                         <h2 className="mb-4 text-center font-semibold">Current Persona</h2>
-                        <div className="h-[calc(100vh-13rem)] overflow-auto pr-4">
+                        <div className="h-[calc(100vh-24rem)] overflow-auto pr-4">
                             <PersonaPanel />
                         </div>
                     </Card>
 
                     {/* Center Panel - Recording Button and Order Summary */}
                     <Card className="p-6 md:overflow-auto">
+                        <h2 className="mb-4 text-center font-semibold">Controls</h2>
                         <div className="space-y-8">
-                            <div className="mb-4 flex flex-col items-center justify-center">
-                                <Button
-                                    onClick={onToggleListening}
-                                    className={`h-12 w-60 ${isRecording ? "bg-red-600 hover:bg-red-700" : "bg-purple-500 hover:bg-purple-600"}`}
-                                    aria-label={isRecording ? t("app.stopRecording") : t("app.startRecording")}
-                                >
-                                    {isRecording ? (
-                                        <>
-                                            <MicOff className="mr-2 h-4 w-4" />
-                                            {t("app.stopConversation")}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Mic className="mr-2 h-6 w-6" />
-                                        </>
-                                    )}
-                                </Button>
-                                <StatusMessage isRecording={isRecording} />
+                            <div className="mb-4 flex flex-col items-center justify-center gap-16">
+                                <div>
+                                    <Button
+                                        onClick={onToggleListening}
+                                        className={`h-12 w-60 ${isRecording ? "bg-red-600 hover:bg-red-700" : "bg-purple-500 hover:bg-purple-600"}`}
+                                        aria-label={isRecording ? t("app.stopRecording") : t("app.startRecording")}
+                                    >
+                                        {isRecording ? (
+                                            <>
+                                                <MicOff className="mr-2 h-4 w-4" />
+                                                {t("app.stopConversation")}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Mic className="mr-2 h-6 w-6" />
+                                            </>
+                                        )}
+                                    </Button>
+                                    <StatusMessage isRecording={isRecording} />
+                                </div>
+                                {!isRecording && !isLoading && transcripts.length > 0 && (
+                                    <div className="mb-4 flex flex-col items-center justify-center gap-4">
+                                        <Button
+                                            onClick={handleEvaluate}
+                                            className={`h-12 w-60 ${isRecording ? "bg-red-600 hover:bg-red-700" : "bg-purple-500 hover:bg-purple-600"}`}
+                                            aria-label={isRecording ? t("app.stopRecording") : t("app.startRecording")}
+                                        >
+                                            <SendHorizonal className="mr-2 h-6 w-6" />
+                                        </Button>
+                                        <span>Send for Evaluation</span>
+                                    </div>
+                                )}
+                                {isLoading && (
+                                    <div className="mb-4 flex flex-col items-center justify-center gap-4">
+                                        <Button
+                                            onClick={handleEvaluate}
+                                            className={`h-12 w-60 ${isRecording ? "bg-red-600 hover:bg-red-700" : "bg-purple-500 hover:bg-purple-600"}`}
+                                            aria-label={isRecording ? t("app.stopRecording") : t("app.startRecording")}
+                                        >
+                                            <Loader className="animate-spin" />
+                                        </Button>
+                                        <span>Sending for Evaluation..</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Card>
@@ -190,8 +262,15 @@ function App() {
                     {/* Desktop Transcript Panel */}
                     <Card className="hidden p-6 md:block">
                         <h2 className="mb-4 text-center font-semibold">Transcript History</h2>
-                        <div className="h-[calc(100vh-13rem)] overflow-auto pr-4">
+                        <div className="h-[calc(100vh-24rem)] overflow-auto pr-4">
                             <TranscriptPanel transcripts={useDummyData ? dummyTranscripts : transcripts} />
+                        </div>
+                    </Card>
+
+                    <Card className="hidden p-6 md:block">
+                        <h2 className="mb-4 text-center font-semibold">Evaluation</h2>
+                        <div className="h-[calc(100vh-24rem)] overflow-auto pr-4">
+                            <EvaluationPanel evaluation={evaluation} />
                         </div>
                     </Card>
                 </div>
