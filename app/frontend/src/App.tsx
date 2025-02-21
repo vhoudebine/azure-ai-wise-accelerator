@@ -191,6 +191,7 @@ function App() {
 
                     {/* Center Panel - Recording Button and Order Summary */}
                     <Card className="p-6 md:overflow-auto">
+                        <h2 className="mb-4 text-center font-semibold">Controls</h2>
                         <div className="space-y-8">
                             <div className="mb-4 flex flex-col items-center justify-center gap-16">
                                 <div>
