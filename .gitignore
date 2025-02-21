@@ -6,6 +6,7 @@ app/frontend/node_modules/
 
 # BACK END
 app/backend/__pycache__/
+app/backend/wise/__pycache__/
 app/backend/lib/
 app/backend/bak/
 

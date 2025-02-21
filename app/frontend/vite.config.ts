@@ -22,6 +22,9 @@ export default defineConfig({
                 target: "ws://localhost:8765",
                 ws: true,
                 rewriteWsOrigin: true
+            },
+            "/evaluation": {
+                target: "http://localhost:8765"
             }
         }
     }
