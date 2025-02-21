@@ -51,6 +51,13 @@ class Evaluation:
             endpoint=doc_intelligence_endpoint,
             credential=AzureKeyCredential(doc_intelligence_key)
         )
+    
+    async def get_avatar(self, request):
+        """Get avatar profiles the user selects from."""
+        avatar_def_path = os.path.join(os.path.dirname(__file__), "util/avatars.json")
+
+        avatar_def_dict = json.loads(avatar_def_path)
+        return web.json_response(avatar_def_dict)
 
     async def generate_response(self, request):
         """Generate AI response using Azure OpenAI GPT."""
