@@ -25,6 +25,9 @@ export default defineConfig({
             },
             "/evaluation": {
                 target: "http://localhost:8765"
+            },
+            "/config": {
+                target: "http://localhost:8765"
             }
         }
     }
