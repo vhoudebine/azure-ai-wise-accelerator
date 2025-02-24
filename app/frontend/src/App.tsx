@@ -125,13 +125,14 @@ function App() {
             body: JSON.stringify(payload)
         });
         const evalReceived = await result.json();
+        console.log(evalReceived);
         setEvaluation(previous => ({
             ...previous,
-            classification: evalReceived.evaluation.classification,
-            overall_score: evalReceived.evaluation.overall_score,
-            criteria: [...evalReceived.evaluation.criteria],
-            rationale: evalReceived.evaluation.rationale,
-            improvement_suggestion: evalReceived.evaluation.improvement_suggestion
+            classification: evalReceived.rule_based_eval.evaluation.classification,
+            overall_score: evalReceived.rule_based_eval.evaluation.overall_score,
+            criteria: [...evalReceived.rule_based_eval.evaluation.criteria],
+            rationale: evalReceived.rule_based_eval.evaluation.rationale,
+            improvement_suggestion: evalReceived.rule_based_eval.evaluation.improvement_suggestion
         }));
         setIsLoading(false);
     };
