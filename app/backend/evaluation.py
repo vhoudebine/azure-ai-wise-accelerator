@@ -44,9 +44,9 @@ class Evaluation:
         doc_intelligence_endpoint = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT")
         doc_intelligence_key = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_KEY")
 
-        print(doc_intelligence_endpoint
-              )
-        print(doc_intelligence_key)
+        # print(doc_intelligence_endpoint
+        #       )
+        # print(doc_intelligence_key)
         self.document_analysis_client = DocumentIntelligenceClient(
             endpoint=doc_intelligence_endpoint,
             credential=AzureKeyCredential(doc_intelligence_key)
