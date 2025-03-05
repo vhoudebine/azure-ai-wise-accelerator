@@ -63,7 +63,8 @@ async def create_app():
         credentials=llm_credential,
         endpoint=llm_endpoint,
         deployment=llm_deployment,
-        voice_choice=os.environ.get("AZURE_OPENAI_REALTIME_VOICE_CHOICE") or "alloy"
+        voice_choice=os.environ.get("AZURE_OPENAI_REALTIME_VOICE_CHOICE") or "alloy",
+        app=app
     )
     rtmt.temperature = 0.6
 
@@ -134,7 +135,7 @@ async def create_app():
     """
 
 
-    rtmt.system_message = system_message
+    rtmt.system_message = system_message 
 
     # attach_tools_rtmt(rtmt,
     #     credentials=search_credential,
