@@ -7,12 +7,15 @@ from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../src'))
 
 from wise.fact_checker import FactChecker
 from wise.fact_extractor import FactExtractor
 from wise.evaluator import Evaluator
 
 from dotenv import load_dotenv
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
