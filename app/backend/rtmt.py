@@ -66,9 +66,10 @@ class RTMiddleTier:
     _token_provider = None
     _session_map = {}
 
-    def __init__(self, endpoint: str, deployment: str, credentials: AzureKeyCredential | DefaultAzureCredential, voice_choice: Optional[str] = None):
+    def __init__(self, endpoint: str, deployment: str, credentials: AzureKeyCredential | DefaultAzureCredential,app: web.Application, voice_choice: Optional[str] = None):
         self.endpoint = endpoint
         self.deployment = deployment
+        self.app = app
         self.voice_choice = voice_choice
         if voice_choice is not None:
             logger.info("Realtime voice choice set to %s", voice_choice)
@@ -164,6 +165,8 @@ class RTMiddleTier:
     async def _process_message_to_server(self, msg: str, ws: web.WebSocketResponse) -> Optional[str]:
         message = json.loads(msg.data)
         updated_message = msg.data
+        current_persona = self.app["current_persona"] if "current_persona" in self.app else None
+        system_message = self.system_message + "\n Here's your persona: You must ONLY refer to this persona when being asked questions about yourself " + json.dumps(current_persona) if current_persona else self.system_message
         if message is not None:
             match message["type"]:
                 case "session.update":
@@ -237,3 +240,5 @@ class RTMiddleTier:
     
     def attach_to_app(self, app, path):
         app.router.add_get(path, self._websocket_handler)
+
+
