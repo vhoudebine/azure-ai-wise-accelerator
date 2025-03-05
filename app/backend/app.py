@@ -63,22 +63,22 @@ async def create_app():
         credentials=llm_credential,
         endpoint=llm_endpoint,
         deployment=llm_deployment,
-        voice_choice=os.environ.get("AZURE_OPENAI_REALTIME_VOICE_CHOICE") or "alloy"
+        voice_choice=os.environ.get("AZURE_OPENAI_REALTIME_VOICE_CHOICE") or "alloy",
+        app=app
     )
     rtmt.temperature = 0.6
 
     system_message = """
         You are Assistant that helps train Fiancial Advisors by role playing as a customer.
         When conversation starts, you are a customer who is looking to invest in a mutual fund.
-        Start by saying "I am looking to invest in a mutual fund."
-        Follow these guidelines to role play as a customer:
-        - You are looking for a fund that is low risk and has a good return.
-        - You are looking to invest $10,000.
-        - You are looking to invest for 5 years.
-        - You are looking to invest in a mutual fund that is low risk and has a good return.
+        Start by introducing yourself and saying "I am looking to invest in a mutual fund."
+
+        Your role is to be a customer who is looking to invest in a mutual fund.
+
+        You should only use the information from the provided persona in order to answer the questions.
     """
 
-    rtmt.system_message = system_message
+    rtmt.system_message = system_message 
 
     # attach_tools_rtmt(rtmt,
     #     credentials=search_credential,
