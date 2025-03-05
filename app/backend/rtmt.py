@@ -172,7 +172,7 @@ class RTMiddleTier:
                 case "session.update":
                     session = message["session"]
                     if self.system_message is not None:
-                        session["instructions"] = self.system_message
+                        session["instructions"] = system_message
                     if self.temperature is not None:
                         session["temperature"] = self.temperature
                     if self.max_tokens is not None:
