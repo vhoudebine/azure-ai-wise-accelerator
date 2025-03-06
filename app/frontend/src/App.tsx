@@ -12,34 +12,19 @@ import PersonaPanel from "@/components/ui/persona-panel";
 import TranscriptPanel from "@/components/ui/transcript-panel";
 import EvaluationPanel from "./components/ui/evaluation-panel";
 import Settings from "@/components/ui/settings";
-// import ImageDialog from "@/components/ui/ImageDialog";
-
 import useRealTime from "@/hooks/useRealtime";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useAudioPlayer from "@/hooks/useAudioPlayer";
-
 import { ThemeProvider, useTheme } from "./context/theme-context";
-import { DummyDataProvider, useDummyDataContext } from "@/context/dummy-data-context";
-// import { AzureSpeechProvider, useAzureSpeechOnContext } from "@/context/azure-speech-context";
 import { AzureSpeechProvider } from "@/context/azure-speech-context";
-
-import dummyTranscriptsData from "@/data/dummyTranscripts.json";
-// import dummyOrderData from "@/data/dummyOrder.json";
 
 function App() {
     const [isRecording, setIsRecording] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    const { useDummyData } = useDummyDataContext();
     const { theme } = useTheme();
 
     const [transcripts, setTranscripts] = useState<Array<{ text: string; isUser: boolean; timestamp: Date }>>(() => {
         return [];
-    });
-    const [dummyTranscripts] = useState<Array<{ text: string; isUser: boolean; timestamp: Date }>>(() => {
-        return dummyTranscriptsData.map(transcript => ({
-            ...transcript,
-            timestamp: new Date(transcript.timestamp)
-        }));
     });
 
     const [evaluation, setEvaluation] = useState<{
@@ -48,12 +33,22 @@ function App() {
         criteria: Array<any>;
         rationale: string;
         improvement_suggestion: string;
+        factCheckTotalChecked: number;
+        factCheckTotalCorrect: number;
+        factCheckTotalIncorrect: number;
+        factCheckTotalUnknown: number;
+        factDetails: Array<any>;
     }>({
         classification: null,
         overall_score: 0,
         criteria: [],
         rationale: "",
-        improvement_suggestion: ""
+        improvement_suggestion: "",
+        factCheckTotalChecked: 0,
+        factCheckTotalCorrect: 0,
+        factCheckTotalIncorrect: 0,
+        factCheckTotalUnknown: 0,
+        factDetails: []
     });
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -132,7 +127,12 @@ function App() {
             overall_score: evalReceived.rule_based_eval.evaluation.overall_score,
             criteria: [...evalReceived.rule_based_eval.evaluation.criteria],
             rationale: evalReceived.rule_based_eval.evaluation.rationale,
-            improvement_suggestion: evalReceived.rule_based_eval.evaluation.improvement_suggestion
+            improvement_suggestion: evalReceived.rule_based_eval.evaluation.improvement_suggestion,
+            factCheckTotalChecked: evalReceived.fact_check_eval.total_facts_shared,
+            factCheckTotalCorrect: evalReceived.fact_check_eval.accurate_facts_count,
+            factCheckTotalIncorrect: evalReceived.fact_check_eval.inaccurate_facts_count,
+            factCheckTotalUnknown: evalReceived.fact_check_eval.unverifiable_facts_count,
+            factDetails: [...evalReceived.fact_check_eval.fact_details]
         }));
         setIsLoading(false);
     };
@@ -255,7 +255,7 @@ function App() {
                                 <SheetTitle>Transcript History</SheetTitle>
                             </SheetHeader>
                             <div className="h-[calc(100vh-4rem)] overflow-auto pr-4">
-                                <TranscriptPanel transcripts={useDummyData ? dummyTranscripts : transcripts} />
+                                <TranscriptPanel transcripts={transcripts} />
                             </div>
                         </SheetContent>
                     </Sheet>
@@ -264,7 +264,7 @@ function App() {
                     <Card className="hidden p-6 md:block">
                         <h2 className="mb-4 text-center font-semibold">Transcript History</h2>
                         <div className="h-[calc(100vh-24rem)] overflow-auto pr-4">
-                            <TranscriptPanel transcripts={useDummyData ? dummyTranscripts : transcripts} />
+                            <TranscriptPanel transcripts={transcripts} />
                         </div>
                     </Card>
 
@@ -285,11 +285,11 @@ function App() {
 export default function RootApp() {
     return (
         <ThemeProvider>
-            <DummyDataProvider>
-                <AzureSpeechProvider>
-                    <App />
-                </AzureSpeechProvider>
-            </DummyDataProvider>
+            {/* <DummyDataProvider> */}
+            <AzureSpeechProvider>
+                <App />
+            </AzureSpeechProvider>
+            {/* </DummyDataProvider> */}
         </ThemeProvider>
     );
 }

@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useDummyDataContext } from "@/context/dummy-data-context";
+// import { useDummyDataContext } from "@/context/dummy-data-context";
 import { useAzureSpeechOnContext } from "@/context/azure-speech-context";
 import { Tooltip } from "@/components/ui/tooltip";
 
@@ -18,7 +18,7 @@ export default function Settings({ isMobile }: SettingsProps) {
         return localStorage.getItem("isDarkMode") === "true";
     });
     const { useAzureSpeechOn, setUseAzureSpeechOn } = useAzureSpeechOnContext();
-    const { useDummyData, setUseDummyData } = useDummyDataContext();
+    // const { useDummyData, setUseDummyData } = useDummyDataContext();
 
     useEffect(() => {
         localStorage.setItem("isDarkMode", isDarkMode.toString());
@@ -37,9 +37,9 @@ export default function Settings({ isMobile }: SettingsProps) {
         setUseAzureSpeechOn(checked);
     };
 
-    const handleDummyDataChange = (checked: boolean) => {
-        setUseDummyData(checked);
-    };
+    // const handleDummyDataChange = (checked: boolean) => {
+    //     setUseDummyData(checked);
+    // };
 
     const SettingsContent = () => (
         <div className="space-y-6">
@@ -87,8 +87,8 @@ export default function Settings({ isMobile }: SettingsProps) {
                     <p className="text-sm text-gray-600 dark:text-gray-400">Toggle between real data and dummy data</p>
                 </div>
                 <div className="ml-4 flex flex-col items-end">
-                    <Switch id="dummy-data" checked={useDummyData} onCheckedChange={handleDummyDataChange} aria-label="Toggle dummy data" />
-                    <span className="text-xs text-gray-500 dark:text-gray-400">{useDummyData ? "Dummy Data" : "Real Data"}</span>
+                    {/* <Switch id="dummy-data" checked={useDummyData} onCheckedChange={handleDummyDataChange} aria-label="Toggle dummy data" /> */}
+                    {/* <span className="text-xs text-gray-500 dark:text-gray-400">{useDummyData ? "Dummy Data" : "Real Data"}</span> */}
                 </div>
             </div>
         </div>
