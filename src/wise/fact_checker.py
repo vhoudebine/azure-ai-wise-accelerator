@@ -1,10 +1,10 @@
 # wise/fact_checker.py
-
+import os
 import json
 from wise.utils import get_chat_completion
 
 class FactChecker:
-    def __init__(self, aoai_client, product_facts, model='gpt-4o'):
+    def __init__(self, aoai_client, product_facts, model=os.environ.get("AZURE_OPENAI_GPT4O_DEPLOYMENT")):
         self.client = aoai_client
         self.product_details = product_facts
         self.model = model
