@@ -10,6 +10,8 @@ Every year, financial services companies onboard new sellers and aim for a swift
 
 Our project provides a cost-effective solution, enabling advisors to train efficiently while reducing overall enablement costs for financial services companies.
 
+![Wise](images/wise1.jpg?raw=true)
+
 ## How to run
 
 ### Start the backend

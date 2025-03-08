@@ -3,7 +3,7 @@ import json
 from wise.utils import get_chat_completion
 
 class Evaluator:
-    def __init__(self, aoai_client, call_theme, evaluation_criteria, model=os.environ.get("AZURE_OPENAI_GPT4O_DEPLOYMENT")):
+    def __init__(self, aoai_client, call_theme, evaluation_criteria, model):
         self.aoai_client = aoai_client
         self.evaluation_criteria = evaluation_criteria
         self.model = model
