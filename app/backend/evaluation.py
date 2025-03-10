@@ -175,7 +175,7 @@ class Evaluation:
 
         theme = "Initial call between a wealth advisor and a prospective customer"
 
-        evaluator = Evaluator(self.aoai_client, evaluation_criteria, theme)
+        evaluator = Evaluator(self.aoai_client, theme, evaluation_criteria, model=os.getenv("AZURE_OPENAI_GPT4O_DEPLOYMENT"))
         evaluation = evaluator.evaluate_transcription(transcript)
 
         return evaluation

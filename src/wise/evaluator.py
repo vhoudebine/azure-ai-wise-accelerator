@@ -1,10 +1,12 @@
+import os
 import json
 from wise.utils import get_chat_completion
 
 class Evaluator:
-    def __init__(self, aoai_client, call_theme, evaluation_criteria):
+    def __init__(self, aoai_client, call_theme, evaluation_criteria, model):
         self.aoai_client = aoai_client
         self.evaluation_criteria = evaluation_criteria
+        self.model = model
         self.theme = call_theme
         self.evaluation_system_prompt = f"""
         You are an AI specialized in analyzing phone calls of type {self.theme}.
@@ -81,7 +83,7 @@ class Evaluator:
       ]
 
       try:
-        evaluation_response = json.loads(get_chat_completion(self.aoai_client, messages, response_format={"type": "json_object"}))
+        evaluation_response = json.loads(get_chat_completion(self.aoai_client, messages,model=self.model, response_format={"type": "json_object"}))
       except json.JSONDecodeError as e:
         print(f"Failed to decode JSON response: {e}")
         evaluation_response = {"error": "Failed to decode JSON response"}

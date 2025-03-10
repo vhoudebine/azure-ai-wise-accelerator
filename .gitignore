@@ -11,6 +11,7 @@ app/backend/lib/
 app/backend/bak/
 
 .env
+src/wise/__pycache__/
 src/wise/__pycache__/__init__.cpython-311.pyc
 src/wise/__pycache__/evaluator.cpython-311.pyc
 src/wise/__pycache__/fact_checker.cpython-311.pyc
