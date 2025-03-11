@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 import StatusMessage from "@/components/ui/status-message";
-// import MenuPanel from "@/components/ui/menu-panel";
 import PersonaPanel from "@/components/ui/persona-panel";
 import TranscriptPanel from "@/components/ui/transcript-panel";
 import EvaluationPanel from "./components/ui/evaluation-panel";
@@ -123,7 +122,7 @@ function App() {
         console.log(evalReceived);
         setEvaluation(previous => ({
             ...previous,
-            classification: evalReceived.rule_based_eval.evaluation.classification,
+            classification: evalReceived.rule_based_eval.evaluation.call_classification,
             overall_score: evalReceived.rule_based_eval.evaluation.overall_score,
             criteria: [...evalReceived.rule_based_eval.evaluation.criteria],
             rationale: evalReceived.rule_based_eval.evaluation.rationale,

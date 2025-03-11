@@ -22,7 +22,6 @@ export default function PersonaPanel() {
         const fetchedConfig = async () => {
             const response = await fetch("/config/get-personas");
             const data = await response.json();
-            console.log(data);
             setFetchedPersonas(data);
         };
         fetchedConfig();
