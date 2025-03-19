@@ -2,7 +2,7 @@
 
 AI and simulation based solution for enablement in the Financial Services Industry on Azure
 
-![Wise](images/logolarge.jpg?raw=true)
+![Wise](images/WiseLogoImage.jpg?raw=true)
 
 ## WISE
 
