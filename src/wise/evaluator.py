@@ -60,7 +60,7 @@ class Evaluator:
               "score": 2,
               "rationale": "The agent communicated well under the given scenario."
             }}],
-            "call_classification": "Good",
+            "classification": "Good",
             "overall_score": 2,
             "rationale": "The agent was able to solve the customer's problem quickly and efficiently.",
             "improvement_suggestion": "The agent should be more polite and empathetic with the customer."
