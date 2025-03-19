@@ -151,9 +151,12 @@ function App() {
         <div className={`min-h-screen bg-background p-4 text-foreground ${theme}`}>
             <div className="mx-auto max-w-7xl">
                 <div className="relative mb-6 flex flex-col items-center md:mb-4">
-                    <h1 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-center text-4xl font-bold text-transparent md:text-6xl">
-                        WISE
-                    </h1>
+                    <div className="flex items-baseline gap-4">
+                        <img src="logowise.svg"></img>
+                        <h1 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-center text-4xl font-bold text-transparent md:text-6xl">
+                            WISE
+                        </h1>
+                    </div>
                     <h2 className="margin-l purple m-4 text-2xl font-bold">
                         AI simulation based solution for enablement in the Financial Services Industry on Azure
                     </h2>
