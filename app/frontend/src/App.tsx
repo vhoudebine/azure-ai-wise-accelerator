@@ -108,7 +108,7 @@ function App() {
         setIsLoading(true);
         const adaptedTranscript = transcripts.map(message => ({
             speaker: message.isUser ? "Advisor" : "Client",
-            text: message.text.trim() // Remove any leading or trailing whitespace
+            text: message.text.trim()
         }));
         const payload = { transcript: adaptedTranscript };
         const result = await fetch("/evaluation/transcript-evaluate", {
@@ -122,7 +122,7 @@ function App() {
         console.log(evalReceived);
         setEvaluation(previous => ({
             ...previous,
-            classification: evalReceived.rule_based_eval.evaluation.call_classification,
+            classification: evalReceived.rule_based_eval.evaluation.classification,
             overall_score: evalReceived.rule_based_eval.evaluation.overall_score,
             criteria: [...evalReceived.rule_based_eval.evaluation.criteria],
             rationale: evalReceived.rule_based_eval.evaluation.rationale,
