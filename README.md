@@ -1,6 +1,7 @@
 # azure-ai-wise-accelerator
 
 AI and simulation based solution for enablement in the Financial Services Industry on Azure
+![Wise](images/logolarge.svg?raw=true)
 
 ## WISE
 
