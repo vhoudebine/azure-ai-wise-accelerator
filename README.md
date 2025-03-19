@@ -2,6 +2,8 @@
 
 AI and simulation based solution for enablement in the Financial Services Industry on Azure
 
+![Wise](images/logolarge.jpg?raw=true)
+
 ## WISE
 
 Financial advisors, wealth managers, and investment representatives need a secure and effective way to hone their skills. They manage diverse portfolios and must be prepared to answer a wide range of questions from clients and prospects. Our AI-driven simulation platform offers a dynamic training environment where advisors can practice and receive actionable feedback to enhance their expertise.
