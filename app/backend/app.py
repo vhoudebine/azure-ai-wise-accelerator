@@ -8,7 +8,6 @@ from azure.core.credentials import AzureKeyCredential
 from azure.identity import AzureDeveloperCliCredential, DefaultAzureCredential
 from dotenv import load_dotenv
 
-from tools import attach_tools_rtmt
 from rtmt import RTMiddleTier
 from evaluation import Evaluation
 from app_config import AppConfig
