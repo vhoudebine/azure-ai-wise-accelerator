@@ -2,7 +2,7 @@
 
 WISE is an AI and simulation based solution for enablement in the Financial Services Industry on Azure.
 
-![Wise](images/WiseLogoImage.jpg?raw=true)
+![Wise](images/WisePromo.jpg?raw=true)
 
 ## WISE
 
